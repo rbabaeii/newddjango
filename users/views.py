@@ -1,9 +1,14 @@
+from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth import login , authenticate , logout
+
+from uuid import uuid4
 # Create your views here.
+from django.core.mail import send_mail
+from todolist.models import Data
 class users(View):
     def get(self , request):
         return render(request , "users/index.html")
@@ -46,3 +51,24 @@ class logoutt(View):
     def get(self , request):
         logout(request)
         return redirect("/users/u")
+class Forgotpassword(View):
+    def get(self , request):
+        return render(request , 'users/password.html')
+    def post(slf , request):
+        email = request.POST['email']
+        username = request.POST['username']
+        user = User.objects.get(username = username)
+        if user :
+            user.password = uuid4().hex
+            user.save()
+            subject = 'Change password'
+            massege = f"Hi {user.username} your new password is : {user.password} please after login in account change youre password"
+            usermail = [email , ]
+            print(user.password)
+            emal_from = settings.EMAIL_HOST_USER 
+            print('---')
+            send_mail(subject , massege , emal_from , usermail)
+            print('====')
+            return HttpResponse('new password sent')
+        else:
+            return HttpResponse("username is not exist !! ")
