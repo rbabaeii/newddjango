@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'reza.wsgi.application'
 #       'NAME': BASE_DIR / 'db.sqlite3',
 #    }
 #}
- DATABASES = {
+DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'eyfuzkwb',
@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'reza.wsgi.application'
         'HOST': 'ziggy.db.elephantsql.com',
         'PORT': '5432',
     }
- }
+}
 
 
 # Password validation
